@@ -10,7 +10,6 @@
 const cellTotNum = 100;
 const numbers = genNumArray(cellTotNum, 1);
 const aiNums = genBombs(16, 1, 100);
-const totBombs = 32;
 console.log(aiNums);
 
 const cellGrid = document.querySelector(".grid-row");
@@ -54,9 +53,14 @@ function genCell(text) {
 //Gestisce il click dell'utente per un particolare caso
 //[far diventare azzurre le celle che si cliccano e riportare il numero della cella cliccata sul log]
 function handleItemClick() {
-    this.classList.add("light-blue");
     const numToLog = parseInt(this.querySelector("span").textContent);
-    console.log(numToLog);
+
+    if (aiNums.includes(numToLog)){
+        this.classList.add("red");
+    }
+    else {
+        this.classList.add("light-blue");
+    }
 }
 
 //Restituisce un array di numeri generati randomicamente, scegliendo la capienza dell'array ed il range min <-> max per la generazione randomica

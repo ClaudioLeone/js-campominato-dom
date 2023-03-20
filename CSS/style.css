@@ -10,6 +10,7 @@ body{
 }
 
 /* UTILITIES */
+
 .h-margin{
     margin: 0 10px 0 10px;
 }
@@ -119,4 +120,8 @@ body{
 
 .light-blue{
     background-color: lightblue;
+}
+
+.red{
+    background-color: #ff2b52;
 }
