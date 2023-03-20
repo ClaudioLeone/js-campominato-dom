@@ -9,8 +9,10 @@
 
 const cellTotNum = 100;
 const numbers = genNumArray(cellTotNum, 1);
-const aiNums = genBombs(16, 1, 100);
-console.log(aiNums);
+const bombs = genBombs(16, 1, 100);
+const maxTries = cellTotNum - bombs.length;
+const nonBombClicks = [];
+console.log(bombs);
 
 const cellGrid = document.querySelector(".grid-row");
 for (let i = 0; i < numbers.length; i++) {
@@ -55,7 +57,7 @@ function genCell(text) {
 function handleItemClick() {
     const numToLog = parseInt(this.querySelector("span").textContent);
 
-    if (aiNums.includes(numToLog)){
+    if (bombs.includes(numToLog)){
         this.classList.add("red");
     }
     else {
