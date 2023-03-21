@@ -12,7 +12,9 @@ const numbers = genNumArray(cellTotNum, 1);
 const bombs = genBombs(16, 1, 100);
 const maxTries = cellTotNum - bombs.length;
 const nonBombClicks = [];
+let score = 0;
 console.log(bombs);
+console.log(maxTries);
 
 const cellGrid = document.querySelector(".grid-row");
 for (let i = 0; i < numbers.length; i++) {
@@ -40,7 +42,6 @@ function genNumArray(totalNum, firstNum) {
         numArray.push(i);
         // console.log(i);
     }
-
     return numArray;
 }
 
@@ -52,26 +53,40 @@ function genCell(text) {
     return newCell;
 }
 
-//Gestisce il click dell'utente per un particolare caso
-//[far diventare azzurre le celle che si cliccano e riportare il numero della cella cliccata sul log]
+//Gestisce il click dell'utente sulle celle
 function handleItemClick() {
     const numToLog = parseInt(this.querySelector("span").textContent);
 
-    if (bombs.includes(numToLog)){
+    if (bombs.includes(numToLog)) {
         this.classList.add("red");
+        const content = document.querySelector(".grid-row");
+        content.classList.add("no-click");
+        console.log("BOOOOM! Hai calpestato una bomba.");
+        alert("BOOOOM! Hai calpestato una bomba. Resetta la partita e riprova!")
     }
-    else {
+    else if (!bombs.includes(numToLog)) {
         this.classList.add("light-blue");
+        score++;
+        console.log("Punteggio: " + score);
+        nonBombClicks.push(numToLog)
+        console.log(nonBombClicks);
+
+        if (nonBombClicks.length === maxTries) {
+            const content = document.querySelector(".grid-row");
+            content.classList.add("no-click");
+            console.log("Complimenti, hai fatto il botto: VITTORIA!");
+            alert("Complimenti, hai fatto il botto: VITTORIA! Perchè non fai un'altra partita?")
+        }
     }
 }
 
 //Restituisce un array di numeri generati randomicamente, scegliendo la capienza dell'array ed il range min <-> max per la generazione randomica
-function genBombs(totNumsInArray, minRndCap, maxRndCap){
+function genBombs(totNumsInArray, minRndCap, maxRndCap) {
     const bombsArray = [];
-    while (bombsArray.length < totNumsInArray){
-        let rndNumber = Math.floor(Math.random() * (maxRndCap - minRndCap + 1) ) + minRndCap;
-        
-        if (!bombsArray.includes(rndNumber)){
+    while (bombsArray.length < totNumsInArray) {
+        let rndNumber = Math.floor(Math.random() * (maxRndCap - minRndCap + 1)) + minRndCap;
+
+        if (!bombsArray.includes(rndNumber)) {
             bombsArray.push(rndNumber);
         }
     }
